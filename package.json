@@ -1,0 +1,23 @@
+{
+  "name": "be1",
+  "version": "1.0.0",
+  "description": "revised backend",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://superhead@bitbucket.org/superhead/be1.git"
+  },
+  "author": "Pratik Lunagaria",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/superhead/be1#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
