@@ -4,9 +4,8 @@ const fs = require('fs');
 const morgan = require('morgan');
 const path = require('path');
 const rfs = require('rotating-file-stream');
-const home = require('./comp/home');
-const coinHome =require('./comp/coinHome');
-const heatmaps = require('./comp/heatmaps');
+const home = require('./routes/home');
+const coinHome =require('./routes/coinHome');
 require('./CRON/cron_daily');
 
 
@@ -35,10 +34,8 @@ var accessLogStream = rfs('access.log', {
 // setup the logger
 app.use(morgan('combined', { stream: accessLogStream }));
 
-//TODO: Change Routes
 app.use('/pvt/api/home', home);
 app.use('/pvt/api/coins', coinHome);
-app.use('/pvt/api/heatmaps', heatmaps);
 
 const port = process.env.PORT || 5100;
 app.listen(port, () => console.log(`Server running on ${port}`));
