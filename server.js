@@ -9,6 +9,7 @@ const coinHome =require('./routes/coinHome');
 require('./CRON/cron_daily');
 
 
+
 //getting json input from frontend
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());

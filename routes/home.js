@@ -1,11 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const sqlite = require('sqlite3');
-const moment = require('moment');
 const {tz} = require('moment-timezone');
 
 
-//TODO: Fetch additional rows from the database and provide sorting functionality
 // @route   GET
 // @desc    Home data
 // @access  Public
@@ -16,15 +14,21 @@ router.get('/',(req,res)=>{
     //Query Market
     const QueryHomePump = async() => {
         var responseObj = {};
-        let month_folder = tz('Atlantic/Reykjavik').add(-5,'minutes').format('MM-YYYY');
-        let dbName = tz('Atlantic/Reykjavik').add(-5,'minutes').format("DD_MM_YYYY").toString();
-        let Qdb = new sqlite.Database(`./database/monthlydb/${month_folder}/${dbName}.sqlite`);
-        let Qtablename = "`"+dbName+'__'+tz('Atlantic/Reykjavik').add(-5, 'minutes').hour()+"`";
-        console.log(Qtablename);
-        let QPsql=`SELECT * FROM ${Qtablename} WHERE vol_change_24h IS NOT NULL order by vol_change_24h DESC LIMIT 100`;
-        let QDsql=`SELECT * FROM ${Qtablename} WHERE vol_change_24h IS NOT NULL order by vol_change_24h ASC LIMIT 100`;
-        await Qdb.all(QPsql, [], (err,pumprows) => responseObj['DESC']=pumprows);
-        await Qdb.all(QDsql, [], (err,dumprows) => responseObj['ASC']=dumprows);
+        let dbName = tz('Atlantic/Reykjavik').add(-5,'minutes').format('MM-YYYY').toString();
+        let Qdb = new sqlite.Database(`./db/monthlydb/${dbName}.sqlite`);
+        let Qtablename = tz('Atlantic/Reykjavik').format("DD_MM_YYYY").toString();
+        let QPsql=`SELECT * FROM ${Qtablename} WHERE rank_mcap IS NOT NULL order by rank_mcap DESC LIMIT 100`;
+        let QDsql=`SELECT * FROM ${Qtablename} WHERE rank_mcap IS NOT NULL order by rank_mcap ASC LIMIT 100`;
+        let QChgDsql = `SELECT * FROM ${Qtablename} WHERE rank_change IS NOT NULL order by rank_change DESC LIMIT 100`;
+        let QChgAsql = `SELECT * FROM ${Qtablename} WHERE rank_change IS NOT NULL order by rank_change ASC LIMIT 100`;
+        let QRRDsql = `SELECT * FROM ${Qtablename} WHERE rank_ratio IS NOT NULL order by rank_ratio DESC LIMIT 100`;
+        let QRRAsql = `SELECT * FROM ${Qtablename} WHERE rank_ratio IS NOT NULL order by rank_ratio ASC LIMIT 100`;
+        await Qdb.all(QPsql, [], (err,mcap_desc) => responseObj['rank_mcap_DESC']=mcap_desc);
+        await Qdb.all(QDsql, [], (err,mcap_asc) => responseObj['rank_mcap_ASC']=mcap_asc);
+        await Qdb.all(QChgDsql, [], (err,chg_desc) => responseObj['rank_mcap_ASC']=chg_desc);
+        await Qdb.all(QChgAsql, [], (err,chg_asc) => responseObj['rank_mcap_ASC']=chg_asc);
+        await Qdb.all(QRRDsql, [], (err,ratio_desc) => responseObj['rank_mcap_ASC']=ratio_desc);
+        await Qdb.all(QRRAsql, [], (err,ratio_asc) => responseObj['rank_mcap_ASC']=ratio_asc);
         await sleep(30);
         return responseObj;
     };
