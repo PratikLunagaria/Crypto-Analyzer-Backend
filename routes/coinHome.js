@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const sqlite = require('sqlite3');
 // const coinsDataJson = require('../static/coinsDataJson');
 
 
-router.post('/:id',(req,res)=>{
+router.get('/:id',(req,res)=>{
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
