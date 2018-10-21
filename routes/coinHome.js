@@ -17,7 +17,8 @@ router.get('/:id',(req,res)=>{
         var responseObj = {};
         let QFullsql = `SELECT * FROM ${Qtablename} `;
         await Qdb.all(QFullsql, [], (err,ratio_asc) => responseObj=ratio_asc);
-        await sleep(30);
+        await sleep(300);
+        console.log(responseObj)
         return responseObj;
     };
     const sendResults = async() => {
