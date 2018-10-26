@@ -5,7 +5,6 @@ const sqlite = require('sqlite3');
 const ontime = require('ontime');
 const {tz} = require('moment-timezone');
 const path = require('path');
-// const datafeed1 = require('../static/QuerySample').data;
 
 
 function sleep(ms) {
@@ -39,7 +38,7 @@ const dbCreation = () => {
 let db = new sqlite.Database(path.resolve(__dirname, '..', 'db', 'coinsdb','coinRank.sqlite'));
 
 
-ontime({cycle: '04:26:00', utc:true},
+ontime({cycle: '00:05:00', utc:true},
         async function () {
             await dbCreation();
             awaitingResults('cryptocurrency/listings/latest?limit=1988')
