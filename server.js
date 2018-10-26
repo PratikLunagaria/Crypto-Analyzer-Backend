@@ -17,7 +17,7 @@ app.use(express.json());
 
 //TODO: enable this in production
 app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', "http://192.168.0.103:3000");
+  res.header('Access-Control-Allow-Origin', "https://hungry-ramanujan-b329a8.netlify.com/");
   res.header('Access-Control-Allow-Methods','GET');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
