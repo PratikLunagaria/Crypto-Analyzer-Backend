@@ -41,7 +41,7 @@ let db = new sqlite.Database(path.resolve(__dirname, '..', 'db', 'coinsdb','coin
 ontime({cycle: '00:05:00', utc:true},
         async function () {
             await dbCreation();
-            awaitingResults('cryptocurrency/listings/latest?limit=1988')
+            awaitingResults('cryptocurrency/listings/latest?limit=2000')
                 .then(
                     
                     async(datafeed) => {
