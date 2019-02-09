@@ -43,7 +43,6 @@ ontime({cycle: '00:05:00', utc:true},
             await dbCreation();
             awaitingResults('cryptocurrency/listings/latest?limit=2000')
                 .then(
-                    
                     async(datafeed) => {
                         console.log("hello");
                     let inputData = datafeed.slice();
@@ -59,12 +58,13 @@ ontime({cycle: '00:05:00', utc:true},
                     let curtablename = "`"+tz('Atlantic/Reykjavik').format("DD_MM_YYYY").toString()+"`";
                     let curdbName = tz('Atlantic/Reykjavik').format('MM-YYYY').toString();
                     let curdb = new sqlite.Database(path.resolve(__dirname, '..', 'db','monthlydb',`${curdbName}.sqlite`));
+
                     await inputData.map(processed => 
                      curdb.run(
                         `INSERT INTO ${curtablename} VALUES(${processed.id},"${processed.name}","${processed.symbol}","${processed.slug}",${processed.circulating_supply},${processed.total_supply},${processed.max_supply},"${processed.date_added}",${processed.num_market_pairs},${processed.cmc_rank},"${processed.last_updated}",${processed.quote.USD.price},${processed.quote.USD.volume_24h},${processed.quote.USD.percent_change_1h},${processed.quote.USD.percent_change_24h},${processed.quote.USD.percent_change_7d},${processed.quote.USD.market_cap},"${processed.quote.USD.last_updated}",${processed.idx_mcap},${processed.idx_chg}, ${processed.idx_ratio})`)
                     );
+                    
                     await  datafeed.map(async(coinData) => {
-                        
                         let tablename =  "`"+coinData.slug.toString()+"`";
                         await db.run(`CREATE TABLE IF NOT EXISTS ${tablename}(dateis TEXT,rank_mcap INTEGER, rank_change INTEGER, rank_ratio REAL)`);
                     });
