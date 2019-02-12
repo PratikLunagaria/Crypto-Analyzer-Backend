@@ -126,8 +126,8 @@ async function batchInsertion(){
                                 .transacting(trx)
                                 .catch((err)=>console.log(err));
         });
-        var sleepinterval = await sleep(500);
-        console.log(cointable);
+        var sleepinterval = await sleep(1500);
+        // console.log(cointable);
     });
 
     //inserts into dailydb
