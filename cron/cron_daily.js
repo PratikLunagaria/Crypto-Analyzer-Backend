@@ -66,16 +66,20 @@ ontime({cycle: '00:05:00', utc:true},
                     
                     await  datafeed.map(async(coinData) => {
                         let tablename =  "`"+coinData.slug.toString()+"`";
-                        await db.run(`CREATE TABLE IF NOT EXISTS ${tablename}(dateis TEXT,rank_mcap INTEGER, rank_change INTEGER, rank_ratio REAL)`);
+                        await db.run(`CREATE TABLE IF NOT EXISTS ${tablename}(dateis TEXT,price REAL, volume_24h REAL, percent_change_24h REAL, percent_change_7d REAL, rank_mcap INTEGER, rank_change INTEGER, rank_ratio REAL)`);
+                        // await db.run(`CREATE TABLE IF NOT EXISTS ${tablename}(dateis TEXT,rank_mcap INTEGER, rank_change INTEGER, rank_ratio REAL)`);
                     });
 
                     await sleep(3000);
                     
                     await inputData.map((coinData) => {
                         let tablename =  "`"+coinData.slug.toString()+"`";
-                        db.run(`INSERT INTO ${tablename} VALUES(date('now'),${coinData.idx_mcap},${coinData.idx_chg},${coinData.idx_ratio})`);
+                        db.run(`INSERT INTO ${tablename}(dateis,price,volume_24h,percent_change_24h,percent_change_7d,rank_mcap,rank_change,rank_ratio) VALUES(date('now'),${coinData.quote.USD.price},${coinData.quote.USD.volume_24h},${coinData.quote.USD.percent_change_24h},${coinData.quote.USD.percent_change_7d},${coinData.idx_mcap},${coinData.idx_chg},${coinData.idx_ratio})`)
+                        // db.run(`INSERT INTO ${tablename} VALUES(date('now'),${coinData.idx_mcap},${coinData.idx_chg},${coinData.idx_ratio})`);
                     });
 
+                    await console.log('done');
+                    console.log('okay');
                     }
                 )
         }
