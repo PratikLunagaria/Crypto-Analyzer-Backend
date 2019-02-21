@@ -4,8 +4,11 @@
   "description": "revised backend",
   "main": "server.js",
   "scripts": {
-    "start": "node server",
-    "dev": "nodemon server"
+    "client-install": "cd client && npm install",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -16,9 +19,7 @@
   "homepage": "https://bitbucket.org/superhead/be1#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "chain-function": "^1.0.1",
     "express": "^4.16.4",
-    "knex": "^0.16.3",
     "moment-timezone": "^0.5.21",
     "morgan": "^1.9.1",
     "ontime": "0.0.6",
