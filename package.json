@@ -19,7 +19,7 @@
     "express": "^4.16.4",
     "knex": "^0.16.3",
     "knex-cleaner": "^1.1.4",
-    "moment-timezone": "^0.5.21",
+    "moment-timezone": "^0.5.35",
     "morgan": "^1.9.1",
     "ontime": "0.0.6",
     "pg": "^7.8.0",
